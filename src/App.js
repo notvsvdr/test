@@ -8,14 +8,19 @@ class App extends React.Component {
     componentDidMount () {
         this.props.loadWeather();
         if ('geolocation' in navigator) {
-            const options = { enableHighAccuracy: true, maximumAge: 100, timeout: 60000 };
-            var watchID = navigator.geolocation.watchPosition((position) => {alert(`${position.coords.latitude}`)}, () => {alert('error')}, options );
-            var timeout = setTimeout( function() { navigator.geolocation.clearWatch( watchID ); }, 5000 );
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position.coords)
+                },
+                () => {
+                    console.log('error');
+                }
+            );
         }
     }
 
     kelvToCels = (kelv) => Math.floor(kelv - 273.15);
-    
+
     render () {
         return (
             <div className='app'>
